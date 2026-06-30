@@ -362,7 +362,7 @@ export default function ExploreScreen() {
                 <View className="w-8 h-8 rounded-full bg-[#EAF8F0] items-center justify-center">
                   <Ionicons name="trending-up" size={16} color="#10B981" />
                 </View>
-                <Text className="text-[#475569] text-xs font-bold">Improve my skills</Text>
+                <Text className="text-[#475569] text-sm font-bold">Improve my skills</Text>
               </View>
               <Ionicons name="chevron-forward" size={14} color="#94A3B8" />
             </TouchableOpacity>
@@ -373,7 +373,7 @@ export default function ExploreScreen() {
                 <View className="w-8 h-8 rounded-full bg-[#EFF6FF] items-center justify-center">
                   <Ionicons name="document-text" size={16} color="#3B82F6" />
                 </View>
-                <Text className="text-[#475569] text-xs font-bold">Prepare for exams</Text>
+                <Text className="text-[#475569] text-sm font-bold">Prepare for exams</Text>
               </View>
               <Ionicons name="chevron-forward" size={14} color="#94A3B8" />
             </TouchableOpacity>
@@ -384,7 +384,7 @@ export default function ExploreScreen() {
                 <View className="w-8 h-8 rounded-full bg-[#F5F3FF] items-center justify-center">
                   <Ionicons name="book" size={16} color="#8B5CF6" />
                 </View>
-                <Text className="text-[#475569] text-xs font-bold">Learn a new topic</Text>
+                <Text className="text-[#475569] text-sm font-bold">Learn a new topic</Text>
               </View>
               <Ionicons name="chevron-forward" size={14} color="#94A3B8" />
             </TouchableOpacity>
@@ -395,7 +395,7 @@ export default function ExploreScreen() {
                 <View className="w-8 h-8 rounded-full bg-[#FFF7ED] items-center justify-center">
                   <Ionicons name="pencil" size={16} color="#F97316" />
                 </View>
-                <Text className="text-[#475569] text-xs font-bold">Get homework help</Text>
+                <Text className="text-[#475569] text-sm font-bold">Get homework help</Text>
               </View>
               <Ionicons name="chevron-forward" size={14} color="#94A3B8" />
             </TouchableOpacity>
