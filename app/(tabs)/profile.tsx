@@ -44,76 +44,67 @@ export default function ProfileScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* Profile Card Info Box */}
-        <View className="mb-6 px-6">
-          <View className="bg-[#EFF6FF] rounded-[32px] p-5 flex-row relative h-[180px] shadow-sm shadow-blue-50/50 overflow-hidden">
-            {/* Background Illustration Stack */}
-            <View className="absolute right-0 bottom-0 top-0 w-[42%] justify-end items-end z-0">
-              <Image
-                source={require('@/assets/images/graduation_books.png')}
-                style={{ width: '100%', height: '100%' }}
-                contentFit="contain"
-              />
+        <View className="mb-6 px-6 mt-2">
+          <View className="rounded-[16px] flex-row relative h-[180px] w-full shadow-sm shadow-blue-50/50 overflow-hidden">
+            {/* Background Image Layer */}
+            <Image
+              source={require('@/assets/images/profile-banner-background.png')}
+              style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
+              contentFit="cover"
+            />
+
+            {/* Avatar inside background circle (Left side) */}
+            <View className="w-[130px] pl-5 justify-center items-center z-10">
+              <View className="relative w-[96px] h-[96px]">
+                <View className="w-full h-full rounded-full overflow-hidden border border-white">
+                  <Image source={require('@/assets/images/female_tutor.png')} style={{ width: '100%', height: '100%' }} contentFit="cover" />
+                </View>
+                <View className="absolute bottom-2 right-2 w-4 h-4 bg-[#10B981] rounded-full border-2 border-white" />
+              </View>
             </View>
 
-            {/* Left Content column */}
-            <View className="w-[58%] justify-between z-10">
-              <View className="flex-row items-center">
-                {/* Double circle avatar frame */}
-                <View className="relative w-16 h-16 rounded-full items-center justify-center bg-blue-100/50 border border-blue-200/50 mr-3">
-                  <View className="w-14 h-14 rounded-full overflow-hidden border border-white">
-                    <Image source={require('@/assets/images/female_tutor.png')} style={{ width: '100%', height: '100%' }} contentFit="cover" />
-                  </View>
-                  <View className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-[#10B981] rounded-full border-2 border-white" />
+            {/* Right Column (Text and Level info) */}
+            <View className="flex-1 ml-2 py-5 pr-5 justify-between z-10">
+              {/* Top Row: Name and Title */}
+              <View>
+                <View className="flex-row items-center gap-1">
+                  <Text className="text-[#0F172A] font-black text-base" numberOfLines={1}>Sarah Johnson</Text>
+                  <Ionicons name="checkmark-circle" size={14} color="#3B82F6" />
                 </View>
-
-                {/* Right Side details */}
-                <View className="flex-1">
-                  <View className="flex-row items-center gap-1">
-                    <Text className="text-[#0F172A] font-black text-base" numberOfLines={1}>Sarah Johnson</Text>
-                    <Ionicons name="checkmark-circle" size={15} color="#3B82F6" />
-                  </View>
-                  
-                  <View className="flex-row items-center gap-1 mt-0.5">
-                    <Text className="text-[#64748B] text-[11px] font-bold">Math Learner</Text>
-                    <Ionicons name="pencil" size={10} color="#94A3B8" />
-                  </View>
+                <View className="flex-row items-center gap-1 mt-0.5">
+                  <Text className="text-[#64748B] text-[10px] font-bold">Math Learner</Text>
+                  <Ionicons name="pencil" size={10} color="#94A3B8" />
                 </View>
               </View>
 
-              {/* Account properties list */}
-              <View className="mt-3 gap-1">
+              {/* Middle Row: Contact Info */}
+              <View className="gap-1 my-1">
                 <View className="flex-row items-center gap-1.5">
                   <Ionicons name="mail-outline" size={11} color="#64748B" />
-                  <Text className="text-[#64748B] text-[10px] font-bold">sarah.johnson@gmail.com</Text>
+                  <Text className="text-[#64748B] text-[10px] font-bold" numberOfLines={1}>sarah.johnson@gmail.com</Text>
                 </View>
                 <View className="flex-row items-center gap-1.5">
                   <Ionicons name="location-outline" size={11} color="#64748B" />
-                  <Text className="text-[#64748B] text-[10px] font-bold">New York, USA</Text>
+                  <Text className="text-[#64748B] text-[10px] font-bold" numberOfLines={1}>New York, USA</Text>
                 </View>
                 <View className="flex-row items-center gap-1.5">
                   <Ionicons name="calendar-outline" size={11} color="#64748B" />
-                  <Text className="text-[#64748B] text-[10px] font-bold">Joined May 2024</Text>
+                  <Text className="text-[#64748B] text-[10px] font-bold" numberOfLines={1}>Joined May 2024</Text>
                 </View>
               </View>
-            </View>
 
-            {/* Level card overlay (Top-Right) */}
-            <View className="absolute top-4 right-4 bg-white border border-slate-100/50 rounded-2xl p-2 shadow-sm shadow-slate-100 w-[110px] z-10">
-              <View className="flex-row items-center gap-1.5">
-                <View className="w-5 h-5 bg-[#EFF6FF] rounded-md items-center justify-center">
-                  <Ionicons name="shield" size={11} color="#3B82F6" />
+              {/* Bottom Row: XP Progress Bar & Level */}
+              <View className="bg-white/80 border border-slate-100/50 rounded-2xl p-2 shadow-sm shadow-slate-100/30">
+                <View className="flex-row justify-between items-center mb-1">
+                  <View className="flex-row items-center gap-1">
+                    <Ionicons name="shield" size={11} color="#3B82F6" />
+                    <Text className="text-[#0F172A] text-[9.5px] font-black">Level 8</Text>
+                  </View>
+                  <Text className="text-[#94A3B8] text-[8px] font-bold">820 / 1200 XP</Text>
                 </View>
-                <View>
-                  <Text className="text-[#0F172A] text-[9.5px] font-black">Level 8</Text>
-                  <Text className="text-[#94A3B8] text-[7.5px] font-bold">Keep learning!</Text>
-                </View>
-              </View>
-              {/* XP Progress bar */}
-              <View className="mt-2">
                 <View className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
                   <View className="h-full bg-[#3B82F6] rounded-full" style={{ width: '68%' }} />
                 </View>
-                <Text className="text-[#94A3B8] text-[7px] text-right mt-1 font-bold">820 / 1200 XP</Text>
               </View>
             </View>
           </View>
