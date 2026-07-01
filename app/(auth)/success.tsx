@@ -10,11 +10,35 @@ export default function SuccessScreen() {
   const purpose = params.purpose || 'register';
 
   const handleHomeRedirect = () => {
-    // Navigate straight to tabs dashboard and reset stack history
-    router.replace('/(tabs)');
+    if (purpose === 'booking') {
+      router.replace('/(tabs)/my-learning');
+    } else {
+      // Navigate straight to tabs dashboard and reset stack history
+      router.replace('/(tabs)');
+    }
   };
 
-  const isRegister = purpose === 'register';
+  const getTitle = () => {
+    if (purpose === 'booking') return 'Booking Confirmed!';
+    if (purpose === 'register') return 'Success!';
+    return 'Password Reset';
+  };
+
+  const getMessage = () => {
+    if (purpose === 'booking') {
+      return 'Your private coaching session has been successfully booked. You can view all schedule details in your My Learning tab.';
+    }
+    if (purpose === 'register') {
+      return 'Your account has been successfully verified. Welcome to Nexlab! Get ready to explore courses, workshops, and private coaching.';
+    }
+    return 'Your password has been successfully reset. You can now log back into your profile securely.';
+  };
+
+  const getButtonText = () => {
+    if (purpose === 'booking') return 'Go to My Learning';
+    if (purpose === 'register') return 'Get Started';
+    return 'Go to Home';
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-white justify-between px-6 py-6" edges={['top', 'bottom']}>
@@ -35,25 +59,23 @@ export default function SuccessScreen() {
 
         {/* Success Title */}
         <Text className="text-[#1B3B22] text-[28px] font-black text-center tracking-tight mb-4">
-          {isRegister ? 'Success!' : 'Password Reset'}
+          {getTitle()}
         </Text>
 
         {/* Success Message */}
         <Text className="text-[#64748B] text-sm text-center leading-[22px] px-2 font-medium">
-          {isRegister
-            ? 'Your account has been successfully verified. Welcome to Nexlab! Get ready to explore courses, workshops, and private coaching.'
-            : 'Your password has been successfully reset. You can now log back into your profile securely.'}
+          {getMessage()}
         </Text>
       </View>
 
       {/* Action Button at bottom */}
-      <View className="w-full">
+      <View className="w-full pb-8">
         <TouchableOpacity 
-          className="bg-[#1B3B22] h-[52px] rounded-full justify-center items-center shadow-sm mb-4 active:opacity-90"
+          className="bg-[#1B3B22] h-[52px] rounded-full justify-center items-center shadow-sm active:opacity-90"
           onPress={handleHomeRedirect}
         >
           <Text className="text-white text-sm font-black">
-            {isRegister ? 'Get Started' : 'Go to Home'}
+            {getButtonText()}
           </Text>
         </TouchableOpacity>
       </View>

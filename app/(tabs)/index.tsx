@@ -93,7 +93,7 @@ const SUBJECTS_DATA = [
 
 const FEATURED_TUTORS_DATA = [
   {
-    id: '1',
+    id: 'featured_1',
     name: 'Dr. Amara Okonkwo',
     title: 'STEM Expert',
     location: 'Lagos, NG',
@@ -104,7 +104,7 @@ const FEATURED_TUTORS_DATA = [
     image: require('@/assets/images/female_tutor.png'),
   },
   {
-    id: '2',
+    id: 'featured_2',
     name: 'Prof. Kwame Asante',
     title: 'STEM Expert',
     location: 'Lagos, NG',
@@ -239,6 +239,7 @@ export default function HomeScreen() {
               placeholder="Search tutors, subjects or skills"
               placeholderTextColor="#94A3B8"
               className="flex-1 text-[#1E293B] text-[15px] p-0 px-3"
+              style={{ outlineStyle: 'none' } as any}
             />
             <TouchableOpacity 
               onPress={() => setIsFilterVisible(true)}
@@ -296,7 +297,10 @@ export default function HomeScreen() {
         <View className="px-6 mb-8">
           <View className="flex-row justify-between items-center mb-5">
             <Text className="text-[#0F172A] text-[18px] font-bold">Explore</Text>
-            <TouchableOpacity className="flex-row items-center gap-0.5 active:opacity-70">
+            <TouchableOpacity 
+              onPress={() => router.push('/explore-all')}
+              className="flex-row items-center gap-0.5 active:opacity-70"
+            >
               <Text className="text-[#64748B] text-[13px] font-semibold">View all</Text>
               <Ionicons name="chevron-forward" size={14} color="#64748B" />
             </TouchableOpacity>
@@ -304,28 +308,40 @@ export default function HomeScreen() {
 
           <View className="flex-row justify-between">
             <View className="items-center flex-1">
-              <TouchableOpacity className="w-[66px] h-[66px] bg-[#EAF8F0] border border-[#A7F3D0]/60 rounded-[22px] items-center justify-center shadow-sm shadow-slate-100 active:opacity-80">
+              <TouchableOpacity 
+                onPress={() => router.push('/explore-all')}
+                className="w-[66px] h-[66px] bg-[#EAF8F0] border border-[#A7F3D0]/60 rounded-[22px] items-center justify-center shadow-sm shadow-slate-100 active:opacity-80"
+              >
                 <Ionicons name="shield-checkmark" size={26} color="#10B981" />
               </TouchableOpacity>
               <Text className="text-[#475569] text-xs font-semibold mt-3 text-center">All Tutors</Text>
             </View>
 
             <View className="items-center flex-1">
-              <TouchableOpacity className="w-[66px] h-[66px] bg-[#FEF3C7]/80 border border-[#FDE68A]/60 rounded-[22px] items-center justify-center shadow-sm shadow-slate-100 active:opacity-80">
+              <TouchableOpacity 
+                onPress={() => router.push('/explore-all')}
+                className="w-[66px] h-[66px] bg-[#FEF3C7]/80 border border-[#FDE68A]/60 rounded-[22px] items-center justify-center shadow-sm shadow-slate-100 active:opacity-80"
+              >
                 <Ionicons name="book" size={24} color="#F59E0B" />
               </TouchableOpacity>
               <Text className="text-[#475569] text-xs font-semibold mt-3 text-center">Subjects</Text>
             </View>
 
             <View className="items-center flex-1">
-              <TouchableOpacity className="w-[66px] h-[66px] bg-[#EEF2FF] border border-[#C7D2FE]/60 rounded-[22px] items-center justify-center shadow-sm shadow-slate-100 active:opacity-80">
+              <TouchableOpacity 
+                onPress={() => router.push('/explore-all')}
+                className="w-[66px] h-[66px] bg-[#EEF2FF] border border-[#C7D2FE]/60 rounded-[22px] items-center justify-center shadow-sm shadow-slate-100 active:opacity-80"
+              >
                 <Ionicons name="school" size={26} color="#6366F1" />
               </TouchableOpacity>
               <Text className="text-[#475569] text-xs font-semibold mt-3 text-center">Skills</Text>
             </View>
 
             <View className="items-center flex-1">
-              <TouchableOpacity className="w-[66px] h-[66px] bg-[#FFF1F2] border border-[#FECDD3]/60 rounded-[22px] items-center justify-center shadow-sm shadow-slate-100 active:opacity-80">
+              <TouchableOpacity 
+                onPress={() => router.push('/explore-all')}
+                className="w-[66px] h-[66px] bg-[#FFF1F2] border border-[#FECDD3]/60 rounded-[22px] items-center justify-center shadow-sm shadow-slate-100 active:opacity-80"
+              >
                 <Ionicons name="people" size={26} color="#F43F5E" />
               </TouchableOpacity>
               <Text className="text-[#475569] text-xs font-semibold mt-3 text-center">Group Tutoring</Text>
@@ -361,7 +377,10 @@ export default function HomeScreen() {
         <View className="mb-8">
           <View className="px-6 flex-row justify-between items-center mb-4">
             <Text className="text-[#0F172A] text-[18px] font-bold">Popular Subjects</Text>
-            <TouchableOpacity className="flex-row items-center gap-0.5 active:opacity-70">
+            <TouchableOpacity 
+              onPress={() => router.push('/popular-subjects')}
+              className="flex-row items-center gap-0.5 active:opacity-70"
+            >
               <Text className="text-[#64748B] text-[13px] font-semibold">View all</Text>
               <Ionicons name="chevron-forward" size={14} color="#64748B" />
             </TouchableOpacity>
@@ -406,7 +425,10 @@ export default function HomeScreen() {
         <View className="mb-6">
           <View className="px-6 flex-row justify-between items-center mb-4">
             <Text className="text-[#0F172A] text-[18px] font-bold">Recommended Tutors</Text>
-            <TouchableOpacity className="flex-row items-center gap-0.5 active:opacity-70">
+            <TouchableOpacity 
+              onPress={() => router.push('/recommended-tutors')}
+              className="flex-row items-center gap-0.5 active:opacity-70"
+            >
               <Text className="text-[#64748B] text-[13px] font-semibold">View all</Text>
               <Ionicons name="chevron-forward" size={14} color="#64748B" />
             </TouchableOpacity>
@@ -430,7 +452,10 @@ export default function HomeScreen() {
             })}
             renderItem={({ item }) => (
               <View style={{ width: cardWidth }} className="pr-3">
-                <TouchableOpacity className="bg-white border border-slate-100 p-2 rounded-[24px] flex-row items-center shadow-sm shadow-slate-100/50 active:opacity-95 relative mx-0.5">
+                <TouchableOpacity 
+                  onPress={() => router.push({ pathname: '/tutor-details', params: { id: item.id } })}
+                  className="bg-white border border-slate-100 p-2 rounded-[24px] flex-row items-center shadow-sm shadow-slate-100/50 active:opacity-95 relative mx-0.5"
+                >
                   <View className="w-[80px] h-[80px] rounded-2xl overflow-hidden mr-4">
                     <Image
                       source={item.image}
@@ -556,7 +581,10 @@ export default function HomeScreen() {
               <Text className="text-[#64748B] text-[10px] font-bold uppercase tracking-wider">You Can Learn Anything, Explore</Text>
               <Text className="text-[#10B981] text-2xl font-extrabold mt-1">Featured Tutors</Text>
             </View>
-            <TouchableOpacity className="active:opacity-70 mb-1">
+            <TouchableOpacity 
+              onPress={() => router.push('/recommended-tutors')}
+              className="active:opacity-70 mb-1"
+            >
               <Text className="text-[#64748B] text-sm font-semibold">See all</Text>
             </TouchableOpacity>
           </View>
@@ -585,7 +613,10 @@ export default function HomeScreen() {
             })}
             renderItem={({ item }) => (
               <View style={{ width: cardWidth }} className="pr-3">
-                <TouchableOpacity className="bg-white border border-slate-100 p-3.5 rounded-[24px] flex-row shadow-sm shadow-slate-100/50 active:opacity-95 mx-0.5 relative">
+                <TouchableOpacity 
+                  onPress={() => router.push({ pathname: '/tutor-details', params: { id: item.id } })}
+                  className="bg-white border border-slate-100 p-3.5 rounded-[24px] flex-row shadow-sm shadow-slate-100/50 active:opacity-95 mx-0.5 relative"
+                >
                   {/* Left: Tutor Photo */}
                   <View className="w-[90px] h-[115px] rounded-2xl overflow-hidden mr-4 bg-slate-50">
                     <Image
@@ -633,7 +664,10 @@ export default function HomeScreen() {
                         <Text className="text-[#64748B] text-[9px] font-bold">5+ Yrs</Text>
                       </View>
 
-                      <TouchableOpacity className="bg-[#10B981] px-3.5 py-1.5 rounded-xl active:opacity-90">
+                      <TouchableOpacity 
+                        onPress={() => router.push({ pathname: '/tutor-details', params: { id: item.id } })}
+                        className="bg-[#10B981] px-3.5 py-1.5 rounded-xl active:opacity-90"
+                      >
                         <Text className="text-white text-[10px] font-bold">View Profile</Text>
                       </TouchableOpacity>
                     </View>

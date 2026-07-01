@@ -125,6 +125,7 @@ export default function ExploreScreen() {
               placeholder="Search for subjects, topics or tutors..."
               placeholderTextColor="#94A3B8"
               className="flex-1 text-[#1E293B] text-[15px] p-0 px-3 font-semibold"
+              style={{ outlineStyle: 'none' } as any}
             />
           </View>
           <TouchableOpacity className="w-12 h-12 bg-white border border-slate-100 rounded-2xl items-center justify-center shadow-sm shadow-slate-100 active:opacity-75">
@@ -237,7 +238,8 @@ export default function ExploreScreen() {
             keyExtractor={(item) => item.id}
             onMomentumScrollEnd={onRecommendedTutorsMomentumScrollEnd}
             renderItem={({ item: tutor }) => (
-              <View 
+              <TouchableOpacity 
+                onPress={() => router.push({ pathname: '/tutor-details', params: { id: tutor.id } })}
                 className="bg-white border border-slate-100 p-4 rounded-[24px] mr-3 shadow-sm shadow-slate-100/50 w-[230px] active:opacity-95"
               >
                 {/* Tag Badge */}
@@ -279,10 +281,13 @@ export default function ExploreScreen() {
                 </View>
 
                 {/* CTA Button */}
-                <TouchableOpacity className="border border-[#3B82F6] rounded-xl py-2 mt-4 active:opacity-85">
+                <TouchableOpacity 
+                  onPress={() => router.push({ pathname: '/tutor-details', params: { id: tutor.id } })}
+                  className="border border-[#3B82F6] rounded-xl py-2 mt-4 active:opacity-85"
+                >
                   <Text className="text-[#3B82F6] text-[9.5px] font-black text-center">View Profile</Text>
                 </TouchableOpacity>
-              </View>
+              </TouchableOpacity>
             )}
           />
         </View>
