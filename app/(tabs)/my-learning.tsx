@@ -1,18 +1,117 @@
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import React from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import {
-  Dimensions,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
+  Animated,
+  Easing,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-const { width: screenWidth } = Dimensions.get("window");
+import { useFocusEffect } from "expo-router";
 
 export default function MyLearningScreen() {
+  const mathProgress = useRef(new Animated.Value(0)).current;
+  const physicsProgress = useRef(new Animated.Value(0)).current;
+  const englishProgress = useRef(new Animated.Value(0)).current;
+
+  const [mathPct, setMathPct] = useState(0);
+  const [physicsPct, setPhysicsPct] = useState(0);
+  const [englishPct, setEnglishPct] = useState(0);
+
+  // Listeners to update the numerical percentage text dynamically (scaled from 0-100 to target values)
+  useEffect(() => {
+    const mathListener = mathProgress.addListener(({ value }) => {
+      setMathPct(Math.round((value / 100) * 75));
+    });
+    const physicsListener = physicsProgress.addListener(({ value }) => {
+      setPhysicsPct(Math.round((value / 100) * 45));
+    });
+    const englishListener = englishProgress.addListener(({ value }) => {
+      setEnglishPct(Math.round((value / 100) * 60));
+    });
+    return () => {
+      mathProgress.removeListener(mathListener);
+      physicsProgress.removeListener(physicsListener);
+      englishProgress.removeListener(englishListener);
+    };
+  }, [mathProgress, physicsProgress, englishProgress]);
+
+  useFocusEffect(
+    useCallback(() => {
+      // Reset animations to 0 when page is focused
+      mathProgress.setValue(0);
+      physicsProgress.setValue(0);
+      englishProgress.setValue(0);
+
+      // Animate progress smoothly from 0 to 100
+      Animated.parallel([
+        Animated.timing(mathProgress, {
+          toValue: 100,
+          duration: 1200,
+          easing: Easing.out(Easing.quad),
+          useNativeDriver: false,
+        }),
+        Animated.timing(physicsProgress, {
+          toValue: 100,
+          duration: 1200,
+          easing: Easing.out(Easing.quad),
+          useNativeDriver: false,
+        }),
+        Animated.timing(englishProgress, {
+          toValue: 100,
+          duration: 1200,
+          easing: Easing.out(Easing.quad),
+          useNativeDriver: false,
+        }),
+      ]).start();
+    }, [mathProgress, physicsProgress, englishProgress])
+  );
+
+  // Interpolations for horizontal progress bars (0 to 100 mapping to 0% to target%)
+  const mathWidth = mathProgress.interpolate({
+    inputRange: [0, 100],
+    outputRange: ["0%", "75%"],
+  });
+  const physicsWidth = physicsProgress.interpolate({
+    inputRange: [0, 100],
+    outputRange: ["0%", "45%"],
+  });
+  const englishWidth = englishProgress.interpolate({
+    inputRange: [0, 100],
+    outputRange: ["0%", "60%"],
+  });
+
+  // Interpolations for circle spin animations starting at 12 o'clock (45deg)
+  const mathRotate = mathProgress.interpolate({
+    inputRange: [0, 100],
+    outputRange: ["45deg", "405deg"],
+  });
+  const mathRotateReverse = mathProgress.interpolate({
+    inputRange: [0, 100],
+    outputRange: ["-45deg", "-405deg"],
+  });
+
+  const physicsRotate = physicsProgress.interpolate({
+    inputRange: [0, 100],
+    outputRange: ["45deg", "405deg"],
+  });
+  const physicsRotateReverse = physicsProgress.interpolate({
+    inputRange: [0, 100],
+    outputRange: ["-45deg", "-405deg"],
+  });
+
+  const englishRotate = englishProgress.interpolate({
+    inputRange: [0, 100],
+    outputRange: ["45deg", "405deg"],
+  });
+  const englishRotateReverse = englishProgress.interpolate({
+    inputRange: [0, 100],
+    outputRange: ["-45deg", "-405deg"],
+  });
+
   return (
     <SafeAreaView className="flex-1 bg-[#F8FAFC]" edges={["top"]}>
       {/* Header (Top padding, notification bell, badged indicator) */}
@@ -102,11 +201,16 @@ export default function MyLearningScreen() {
                 </View>
 
                 {/* Right Circle Gauge */}
-                <View className="w-[42px] h-[42px] rounded-full border-[3px] border-slate-100 border-t-[#10B981] border-r-[#10B981] border-l-[#10B981] items-center justify-center">
-                  <Text className="text-[#0F172A] text-[10px] font-black">
-                    75%
-                  </Text>
-                </View>
+                <Animated.View 
+                  style={{ transform: [{ rotate: mathRotate }] }}
+                  className="w-[42px] h-[42px] rounded-full border-[3px] border-slate-100 border-t-[#10B981] border-r-[#10B981] border-b-[#10B981] items-center justify-center"
+                >
+                  <Animated.View style={{ transform: [{ rotate: mathRotateReverse }] }}>
+                    <Text className="text-[#0F172A] text-[10px] font-black">
+                      {mathPct}%
+                    </Text>
+                  </Animated.View>
+                </Animated.View>
               </View>
 
               {/* Bottom Row */}
@@ -114,13 +218,13 @@ export default function MyLearningScreen() {
                 {/* Progress Bar & Text */}
                 <View className="flex-row items-center gap-2.5 flex-1 pr-4">
                   <View className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                    <View
+                    <Animated.View
                       className="h-full bg-[#10B981] rounded-full"
-                      style={{ width: "75%" }}
+                      style={{ width: mathWidth }}
                     />
                   </View>
-                  <Text className="text-[#64748B] text-[10px] font-extrabold">
-                    75% complete
+                  <Text className="text-[#64748B] text-[10px] font-extrabold w-[75px]">
+                    {mathPct}% complete
                   </Text>
                 </View>
 
@@ -175,11 +279,16 @@ export default function MyLearningScreen() {
                 </View>
 
                 {/* Right Circle Gauge */}
-                <View className="w-[42px] h-[42px] rounded-full border-[3px] border-slate-100 border-t-[#F59E0B] border-r-[#F59E0B] items-center justify-center">
-                  <Text className="text-[#0F172A] text-[10px] font-black">
-                    45%
-                  </Text>
-                </View>
+                <Animated.View 
+                  style={{ transform: [{ rotate: physicsRotate }] }}
+                  className="w-[42px] h-[42px] rounded-full border-[3px] border-slate-100 border-t-[#F59E0B] border-r-[#F59E0B] items-center justify-center"
+                >
+                  <Animated.View style={{ transform: [{ rotate: physicsRotateReverse }] }}>
+                    <Text className="text-[#0F172A] text-[10px] font-black">
+                      {physicsPct}%
+                    </Text>
+                  </Animated.View>
+                </Animated.View>
               </View>
 
               {/* Bottom Row */}
@@ -187,13 +296,13 @@ export default function MyLearningScreen() {
                 {/* Progress Bar & Text */}
                 <View className="flex-row items-center gap-2.5 flex-1 pr-4">
                   <View className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                    <View
+                    <Animated.View
                       className="h-full bg-[#F59E0B] rounded-full"
-                      style={{ width: "45%" }}
+                      style={{ width: physicsWidth }}
                     />
                   </View>
-                  <Text className="text-[#64748B] text-[10px] font-extrabold">
-                    45% complete
+                  <Text className="text-[#64748B] text-[10px] font-extrabold w-[75px]">
+                    {physicsPct}% complete
                   </Text>
                 </View>
 
@@ -244,11 +353,16 @@ export default function MyLearningScreen() {
                 </View>
 
                 {/* Right Circle Gauge */}
-                <View className="w-[42px] h-[42px] rounded-full border-[3px] border-slate-100 border-t-[#6366F1] border-r-[#6366F1] border-l-[#6366F1] items-center justify-center">
-                  <Text className="text-[#0F172A] text-[10px] font-black">
-                    60%
-                  </Text>
-                </View>
+                <Animated.View 
+                  style={{ transform: [{ rotate: englishRotate }] }}
+                  className="w-[42px] h-[42px] rounded-full border-[3px] border-slate-100 border-t-[#6366F1] border-r-[#6366F1] border-b-[#6366F1] items-center justify-center"
+                >
+                  <Animated.View style={{ transform: [{ rotate: englishRotateReverse }] }}>
+                    <Text className="text-[#0F172A] text-[10px] font-black">
+                      {englishPct}%
+                    </Text>
+                  </Animated.View>
+                </Animated.View>
               </View>
 
               {/* Bottom Row */}
@@ -256,13 +370,13 @@ export default function MyLearningScreen() {
                 {/* Progress Bar & Text */}
                 <View className="flex-row items-center gap-2.5 flex-1 pr-4">
                   <View className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                    <View
+                    <Animated.View
                       className="h-full bg-[#6366F1] rounded-full"
-                      style={{ width: "60%" }}
+                      style={{ width: englishWidth }}
                     />
                   </View>
-                  <Text className="text-[#64748B] text-[10px] font-extrabold">
-                    60% complete
+                  <Text className="text-[#64748B] text-[10px] font-extrabold w-[75px]">
+                    {englishPct}% complete
                   </Text>
                 </View>
 
