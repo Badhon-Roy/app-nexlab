@@ -163,7 +163,7 @@ export default function MyLearningScreen() {
                       className="text-[#0F172A] font-bold text-[15px]"
                       numberOfLines={1}
                     >
-                      Newton's Laws of Motion
+                      {"Newton's Laws of Motion"}
                     </Text>
                     <Text
                       className="text-[#64748B] text-[11px] mt-0.5 font-semibold"
