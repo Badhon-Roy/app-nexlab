@@ -123,7 +123,7 @@ export default function TutorDetailsScreen() {
         >
           <Ionicons name="arrow-back" size={20} color="#1B3B22" />
         </TouchableOpacity>
-        <Text className="text-[#1B3B22] text-lg font-black">Tutor Profile</Text>
+        <Text className="text-[#1B3B22] text-lg font-bold">Tutor Profile</Text>
         <TouchableOpacity 
           onPress={() => setIsFavorite(!isFavorite)}
           className="p-2 bg-slate-50 rounded-full active:opacity-75"
@@ -157,7 +157,7 @@ export default function TutorDetailsScreen() {
             {/* Specialty & Name */}
             <View className="flex-1">
               <View className="flex-row items-center gap-1.5">
-                <Text className="text-[#0F172A] font-black text-xl leading-tight">
+                <Text className="text-[#0F172A] font-bold text-xl leading-tight">
                   {tutor.name}
                 </Text>
                 <Ionicons name="checkmark-circle" size={20} color="#10B981" />
@@ -170,14 +170,14 @@ export default function TutorDetailsScreen() {
               <View className="flex-row items-center gap-3 mt-3 flex-wrap">
                 <View className="flex-row items-center bg-[#E2F5EA] px-2.5 py-1 rounded-full">
                   <Ionicons name="star" size={12} color="#10B981" />
-                  <Text className="text-[#10B981] text-[10px] font-black ml-1">
+                  <Text className="text-[#10B981] text-[10px] font-bold ml-1">
                     {tutor.rating} ({tutor.reviews})
                   </Text>
                 </View>
 
                 <View className="flex-row items-center bg-[#FEF3C7] px-2.5 py-1 rounded-full">
                   <Ionicons name="briefcase" size={11} color="#F59E0B" />
-                  <Text className="text-[#F59E0B] text-[10px] font-black ml-1">
+                  <Text className="text-[#F59E0B] text-[10px] font-bold ml-1">
                     {tutor.experience}
                   </Text>
                 </View>
@@ -188,7 +188,7 @@ export default function TutorDetailsScreen() {
 
         {/* Bio Section */}
         <View className="bg-white px-6 py-6 mt-3 border-b border-slate-100 shadow-sm shadow-slate-100/50">
-          <Text className="text-[#0F172A] text-[15px] font-black mb-3">About Me</Text>
+          <Text className="text-[#0F172A] text-[15px] font-bold mb-3">About Me</Text>
           <Text className="text-[#475569] text-[13px] leading-6 font-medium">
             {tutor.bio}
           </Text>
@@ -196,13 +196,13 @@ export default function TutorDetailsScreen() {
 
         {/* Credentials / Education */}
         <View className="bg-white px-6 py-6 mt-3 border-b border-slate-100 shadow-sm shadow-slate-100/50">
-          <Text className="text-[#0F172A] text-[15px] font-black mb-4">Education & Background</Text>
+          <Text className="text-[#0F172A] text-[15px] font-bold mb-4">Education & Background</Text>
           <View className="flex-row items-start">
             <View className="w-9 h-9 rounded-xl bg-[#EEF2FF] items-center justify-center mr-3.5 mt-0.5">
               <MaterialCommunityIcons name="school" size={20} color="#6366F1" />
             </View>
             <View className="flex-1">
-              <Text className="text-[#1E293B] text-sm font-black">Degrees & Certificates</Text>
+              <Text className="text-[#1E293B] text-sm font-bold">Degrees & Certificates</Text>
               <Text className="text-[#64748B] text-xs font-semibold mt-1 leading-5">
                 {tutor.education}
               </Text>
@@ -212,12 +212,12 @@ export default function TutorDetailsScreen() {
 
         {/* Testimonials & Reviews */}
         <View className="bg-white px-6 py-6 mt-3 border-b border-slate-100 shadow-sm shadow-slate-100/50">
-          <Text className="text-[#0F172A] text-[15px] font-black mb-4">Student Reviews</Text>
+          <Text className="text-[#0F172A] text-[15px] font-bold mb-4">Student Reviews</Text>
           <View className="gap-y-4">
             {tutor.reviewsList.map((review: any) => (
               <View key={review.id} className="bg-slate-50/50 border border-slate-100 rounded-2xl p-4">
                 <View className="flex-row justify-between items-center mb-2">
-                  <Text className="text-[#1E293B] font-black text-sm">{review.reviewer}</Text>
+                  <Text className="text-[#1E293B] font-bold text-sm">{review.reviewer}</Text>
                   <Text className="text-[#94A3B8] text-[10px] font-semibold">{review.time}</Text>
                 </View>
                 
@@ -246,7 +246,7 @@ export default function TutorDetailsScreen() {
       <View className="absolute bottom-0 left-0 right-0 bg-white border-t border-slate-100 px-6 py-4 flex-row items-center justify-between shadow-2xl">
         <View>
           <Text className="text-[#64748B] text-[11px] font-bold">Hourly Rate</Text>
-          <Text className="text-[#10B981] text-2xl font-black mt-0.5">${tutor.price}<Text className="text-[#64748B] text-xs font-semibold"> / hour</Text></Text>
+          <Text className="text-[#10B981] text-2xl font-bold mt-0.5">${tutor.price}<Text className="text-[#64748B] text-xs font-semibold"> / hour</Text></Text>
         </View>
 
         {/* Book Now Button with Gradient */}
@@ -261,7 +261,7 @@ export default function TutorDetailsScreen() {
             end={{ x: 1, y: 0 }}
             className="py-4 items-center justify-center"
           >
-            <Text className="text-white text-sm font-black">Book a Lesson</Text>
+            <Text className="text-white text-sm font-bold">Book a Lesson</Text>
           </LinearGradient>
         </TouchableOpacity>
       </View>

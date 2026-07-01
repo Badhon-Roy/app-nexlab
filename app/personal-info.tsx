@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function PersonalInfoScreen() {
   const router = useRouter();
@@ -14,6 +15,26 @@ export default function PersonalInfoScreen() {
   const [fullName, setFullName] = useState('Sarah Johnson');
   const [email, setEmail] = useState('sarah.johnson@gmail.com');
   const [location, setLocation] = useState('New York, USA');
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+
+  const handlePickImage = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      Alert.alert('Permission Required', 'Permission to access media library is required to upload a profile picture.');
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.8,
+    });
+
+    if (!result.canceled && result.assets && result.assets[0].uri) {
+      setProfileImage(result.assets[0].uri);
+    }
+  };
 
   const handleSaveChanges = () => {
     // Show success and go back
@@ -51,13 +72,14 @@ export default function PersonalInfoScreen() {
           <View className="relative w-24 h-24">
             <View className="w-full h-full rounded-full overflow-hidden border-2 border-[#10B981]/20 shadow-sm">
               <Image 
-                source={require('@/assets/images/female_tutor.png')} 
+                source={profileImage ? { uri: profileImage } : require('@/assets/images/female_tutor.png')} 
                 style={{ width: '100%', height: '100%' }}
                 contentFit="cover"
               />
             </View>
             {/* Camera Overlay Icon */}
             <TouchableOpacity 
+              onPress={handlePickImage}
               activeOpacity={0.85}
               className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-[#10B981] border-2 border-white items-center justify-center shadow-md shadow-emerald-500/20 active:opacity-90"
             >

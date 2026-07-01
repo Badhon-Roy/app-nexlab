@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function SettingsScreen() {
   const router = useRouter();
@@ -15,12 +16,17 @@ export default function SettingsScreen() {
   const [studyReminder, setStudyReminder] = useState(true);
   const [selectedGoal, setSelectedGoal] = useState('45 Mins / Day');
   const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
+  const [isGoalModalVisible, setIsGoalModalVisible] = useState(false);
+  const [tempGoal, setTempGoal] = useState('45 Mins / Day');
 
-  const handleGoalChange = () => {
-    const goals = ['15 Mins / Day', '30 Mins / Day', '45 Mins / Day', '1 Hour / Day', '2 Hours / Day'];
-    const currentIndex = goals.indexOf(selectedGoal);
-    const nextIndex = (currentIndex + 1) % goals.length;
-    setSelectedGoal(goals[nextIndex]);
+  const openGoalModal = () => {
+    setTempGoal(selectedGoal);
+    setIsGoalModalVisible(true);
+  };
+
+  const applyGoal = () => {
+    setSelectedGoal(tempGoal);
+    setIsGoalModalVisible(false);
   };
 
   const ToggleSwitch = ({ value, onValueChange }: { value: boolean; onValueChange: () => void }) => (
@@ -182,7 +188,7 @@ export default function SettingsScreen() {
           <View className="bg-white border border-slate-100 rounded-[24px] overflow-hidden shadow-sm shadow-slate-100/50">
             {/* Daily Goal */}
             <TouchableOpacity 
-              onPress={handleGoalChange}
+              onPress={openGoalModal}
               className="flex-row items-center justify-between p-4 border-b border-slate-50 active:opacity-75"
             >
               <View className="flex-row items-center gap-3.5">
@@ -222,7 +228,10 @@ export default function SettingsScreen() {
           
           <View className="bg-white border border-slate-100 rounded-[24px] overflow-hidden shadow-sm shadow-slate-100/50">
             {/* Help Center */}
-            <TouchableOpacity className="flex-row items-center justify-between p-4 border-b border-slate-50 active:opacity-75">
+            <TouchableOpacity 
+              onPress={() => router.push('/help-center')}
+              className="flex-row items-center justify-between p-4 border-b border-slate-50 active:opacity-75"
+            >
               <View className="flex-row items-center gap-3.5">
                 <View className="w-10 h-10 rounded-full bg-[#EAF8F0] items-center justify-center">
                   <Ionicons name="help-circle" size={18} color="#10B981" />
@@ -267,42 +276,144 @@ export default function SettingsScreen() {
         animationType="fade"
         onRequestClose={() => setIsLogoutModalVisible(false)}
       >
-        <View className="flex-1 bg-black/40 justify-center items-center px-6">
-          <View className="bg-white w-full rounded-[28px] p-6 shadow-2xl items-center">
-            {/* Warning Icon Box */}
-            <View className="w-14 h-14 bg-rose-50 rounded-2xl items-center justify-center mb-4">
-              <Ionicons name="log-out" size={26} color="#F43F5E" />
+        <TouchableOpacity 
+          activeOpacity={1} 
+          onPress={() => setIsLogoutModalVisible(false)}
+          className="flex-1 bg-black/40 justify-center items-center px-6"
+        >
+          <TouchableOpacity activeOpacity={1} onPress={() => {}} className="w-full">
+            <View className="bg-white w-full rounded-[28px] p-6 shadow-2xl items-center">
+              {/* Warning Icon Box */}
+              <View className="w-14 h-14 bg-rose-50 rounded-2xl items-center justify-center mb-4">
+                <Ionicons name="log-out" size={26} color="#F43F5E" />
+              </View>
+
+              {/* Warning Message */}
+              <Text className="text-[#1E293B] text-lg font-bold text-center mb-2">Log Out</Text>
+              <Text className="text-[#64748B] text-xs font-semibold text-center leading-5 mb-6 px-4">
+                Are you sure you want to log out of your Nexlab account? You will need to sign in again to access your lessons.
+              </Text>
+
+              {/* Button Actions */}
+              <View className="flex-row gap-3 w-full">
+                {/* Cancel Button */}
+                <TouchableOpacity
+                  onPress={() => setIsLogoutModalVisible(false)}
+                  className="flex-1 border border-slate-100 py-3.5 rounded-2xl bg-white active:opacity-75 items-center justify-center"
+                >
+                  <Text className="text-[#64748B] text-xs font-bold">Cancel</Text>
+                </TouchableOpacity>
+
+                {/* Log Out Confirm Button */}
+                <TouchableOpacity
+                  onPress={() => {
+                    setIsLogoutModalVisible(false);
+                    router.replace('/login');
+                  }}
+                  className="flex-1 bg-[#F43F5E] py-3.5 rounded-2xl active:opacity-90 items-center justify-center shadow-md shadow-rose-500/20"
+                >
+                  <Text className="text-white text-xs font-bold">Log Out</Text>
+                </TouchableOpacity>
+              </View>
             </View>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
 
-            {/* Warning Message */}
-            <Text className="text-[#1E293B] text-lg font-bold text-center mb-2">Log Out</Text>
-            <Text className="text-[#64748B] text-xs font-semibold text-center leading-5 mb-6 px-4">
-              Are you sure you want to log out of your Nexlab account? You will need to sign in again to access your lessons.
-            </Text>
+      {/* Daily Goal Selection Modal */}
+      <Modal
+        visible={isGoalModalVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setIsGoalModalVisible(false)}
+      >
+        <TouchableOpacity 
+          activeOpacity={1} 
+          onPress={() => setIsGoalModalVisible(false)}
+          className="flex-1 bg-black/40 justify-end"
+        >
+          <TouchableOpacity activeOpacity={1} onPress={() => {}} className="w-full">
+            <View className="bg-white rounded-t-[32px] p-6 pb-8 shadow-2xl">
+              {/* Grabber Handle */}
+              <View className="w-12 h-1 bg-slate-200 rounded-full self-center mb-5" />
 
-            {/* Button Actions */}
-            <View className="flex-row gap-3 w-full">
-              {/* Cancel Button */}
-              <TouchableOpacity
-                onPress={() => setIsLogoutModalVisible(false)}
-                className="flex-1 border border-slate-100 py-3.5 rounded-2xl bg-white active:opacity-75 items-center justify-center"
-              >
-                <Text className="text-[#64748B] text-xs font-bold">Cancel</Text>
-              </TouchableOpacity>
+              {/* Header info */}
+              <View className="flex-row items-center gap-2 mb-2">
+                <Ionicons name="trending-up" size={20} color="#8B5CF6" />
+                <Text className="text-[#1E293B] text-lg font-bold">Study Goal</Text>
+              </View>
+              <Text className="text-[#64748B] text-xs font-semibold leading-5 mb-5">
+                Choose a daily learning time target that fits your schedule.
+              </Text>
 
-              {/* Log Out Confirm Button */}
-              <TouchableOpacity
-                onPress={() => {
-                  setIsLogoutModalVisible(false);
-                  router.replace('/login');
-                }}
-                className="flex-1 bg-[#F43F5E] py-3.5 rounded-2xl active:opacity-90 items-center justify-center shadow-md shadow-rose-500/20"
-              >
-                <Text className="text-white text-xs font-bold">Log Out</Text>
-              </TouchableOpacity>
+              {/* Options list */}
+              <View className="gap-y-3 mb-6">
+                {[
+                  { label: '15 Mins / Day', desc: 'Light • Easy to maintain daily' },
+                  { label: '30 Mins / Day', desc: 'Regular • Recommended for standard learning' },
+                  { label: '45 Mins / Day', desc: 'Intense • Accelerated progress target' },
+                  { label: '1 Hour / Day', desc: 'Advanced • Intensive topic study' },
+                  { label: '2 Hours / Day', desc: 'Super Expert • Full academic test prep' },
+                ].map((goal) => {
+                  const isSelected = tempGoal === goal.label;
+                  return (
+                    <TouchableOpacity
+                      key={goal.label}
+                      onPress={() => setTempGoal(goal.label)}
+                      activeOpacity={0.8}
+                      className={`flex-row items-center justify-between p-4 rounded-2xl border transition-all ${
+                        isSelected 
+                          ? 'border-[#10B981] bg-[#EAF8F0]/40' 
+                          : 'border-slate-100 bg-white'
+                      }`}
+                    >
+                      <View>
+                        <Text className={`text-sm font-bold ${isSelected ? 'text-[#10B981]' : 'text-[#1E293B]'}`}>
+                          {goal.label}
+                        </Text>
+                        <Text className="text-[#94A3B8] text-[10px] font-semibold mt-0.5">
+                          {goal.desc}
+                        </Text>
+                      </View>
+                      <View className={`w-5 h-5 rounded-full border items-center justify-center ${
+                        isSelected ? 'border-[#10B981] bg-[#10B981]' : 'border-slate-300'
+                      }`}>
+                        {isSelected && <Ionicons name="checkmark" size={12} color="white" />}
+                      </View>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+
+              {/* Actions */}
+              <View className="flex-row gap-3">
+                {/* Cancel */}
+                <TouchableOpacity
+                  onPress={() => setIsGoalModalVisible(false)}
+                  className="flex-1 border border-slate-100 py-3.5 rounded-2xl bg-white active:opacity-75 items-center justify-center"
+                >
+                  <Text className="text-[#64748B] text-xs font-bold">Cancel</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={applyGoal}
+                  activeOpacity={0.8}
+                  className="flex-1 rounded-2xl overflow-hidden shadow-sm"
+                >
+                  <LinearGradient
+                    colors={['#10B981', '#059669']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={{ borderRadius: 16 }}
+                    className="py-3.5 items-center justify-center"
+                  >
+                    <Text className="text-white text-sm font-bold">Apply Goal</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        </View>
+          </TouchableOpacity>
+        </TouchableOpacity>
       </Modal>
     </SafeAreaView>
   );
