@@ -28,6 +28,7 @@ export default function RootLayout() {
         <Stack.Screen name="settings" options={{ headerShown: false, animation: 'slide_from_right' }} />
         <Stack.Screen name="personal-info" options={{ headerShown: false, animation: 'slide_from_right' }} />
         <Stack.Screen name="password-security" options={{ headerShown: false, animation: 'slide_from_right' }} />
+        <Stack.Screen name="help-center" options={{ headerShown: false, animation: 'slide_from_right' }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
       </Stack>
       <StatusBar style="auto" />

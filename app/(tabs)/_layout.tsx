@@ -1,10 +1,17 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { View, Platform } from 'react-native';
+import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { HapticTab } from '@/components/haptic-tab';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
+  const insets = useSafeAreaInsets();
+  
+  // Dynamic heights based on safe area bottom insets (soft keys vs gestures)
+  const safeBottom = insets.bottom > 0 ? insets.bottom : 16;
+  const tabHeight = 60 + safeBottom;
+
   return (
     <Tabs
       screenOptions={{
@@ -20,8 +27,8 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: '#090D16',
           borderTopWidth: 0,
-          height: Platform.OS === 'ios' ? 92 : 80,
-          paddingBottom: Platform.OS === 'ios' ? 32 : 16,
+          height: tabHeight,
+          paddingBottom: safeBottom,
           paddingTop: 10,
           borderTopLeftRadius: 32,
           borderTopRightRadius: 32,
