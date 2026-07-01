@@ -75,7 +75,10 @@ export default function SettingsScreen() {
           
           <View className="bg-white border border-slate-100 rounded-[24px] overflow-hidden shadow-sm shadow-slate-100/50">
             {/* Profile Info Row */}
-            <TouchableOpacity className="flex-row items-center justify-between p-4 border-b border-slate-50 active:opacity-75">
+            <TouchableOpacity 
+              onPress={() => router.push('/personal-info')}
+              className="flex-row items-center justify-between p-4 border-b border-slate-50 active:opacity-75"
+            >
               <View className="flex-row items-center gap-3.5">
                 <View className="w-10 h-10 rounded-full bg-[#EAF8F0] items-center justify-center">
                   <Ionicons name="person" size={18} color="#10B981" />
@@ -89,7 +92,10 @@ export default function SettingsScreen() {
             </TouchableOpacity>
 
             {/* Change Password */}
-            <TouchableOpacity className="flex-row items-center justify-between p-4 border-b border-slate-50 active:opacity-75">
+            <TouchableOpacity 
+              onPress={() => router.push('/password-security')}
+              className="flex-row items-center justify-between p-4 border-b border-slate-50 active:opacity-75"
+            >
               <View className="flex-row items-center gap-3.5">
                 <View className="w-10 h-10 rounded-full bg-[#FEF3C7] items-center justify-center">
                   <Ionicons name="lock-closed" size={18} color="#F59E0B" />
