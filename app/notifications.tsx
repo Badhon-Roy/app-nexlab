@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Animated, Easing } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Animated, Easing, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { Image } from 'expo-image';
 
 interface NotificationItem {
   id: string;
@@ -248,9 +247,9 @@ export default function NotificationsScreen() {
         /* Empty State (smoothly animated) */
         <Animated.View style={{ opacity: emptyOpacity, flex: 1 }} className="flex-1 w-full items-center justify-center px-8 pb-24">
           <Image
-            source={require('@/assets/images/empty_notifications.png')}
+            source={require('../assets/images/empty_notifications.png')}
             style={{ width: 180, height: 180, marginBottom: 8, alignSelf: 'center' }}
-            contentFit="contain"
+            resizeMode="contain"
           />
           <Text className="text-[#1B3B22] text-lg font-black text-center">All Caught Up!</Text>
           <Text className="text-[#64748B] text-sm text-center leading-[22px] font-medium mt-2 px-6">

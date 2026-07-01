@@ -25,6 +25,7 @@ export default function RootLayout() {
         <Stack.Screen name="recommended-tutors" options={{ headerShown: false, animation: 'slide_from_right' }} />
         <Stack.Screen name="tutor-details" options={{ headerShown: false, animation: 'slide_from_right' }} />
         <Stack.Screen name="booking" options={{ headerShown: false, animation: 'slide_from_right' }} />
+        <Stack.Screen name="settings" options={{ headerShown: false, animation: 'slide_from_right' }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
       </Stack>
       <StatusBar style="auto" />

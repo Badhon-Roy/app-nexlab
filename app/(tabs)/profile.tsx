@@ -36,7 +36,10 @@ export default function ProfileScreen() {
               <Text className="text-white text-[9px] font-extrabold">3</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity className="p-2 bg-white rounded-full border border-slate-100 shadow-sm active:opacity-70">
+          <TouchableOpacity 
+            onPress={() => router.push('/settings')}
+            className="p-2 bg-white rounded-full border border-slate-100 shadow-sm active:opacity-70"
+          >
             <Ionicons name="settings-outline" size={22} color="#1E293B" />
           </TouchableOpacity>
         </View>
