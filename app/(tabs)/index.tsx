@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, FlatList, Dimensions } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, FlatList, Dimensions, Modal } from 'react-native';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { router } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const { width: screenWidth } = Dimensions.get('window');
 const cardWidth = screenWidth * 0.8;
@@ -130,6 +132,13 @@ export default function HomeScreen() {
   const heroBannersFlatListRef = React.useRef<FlatList>(null);
   const [currentHeroBannerIndex, setCurrentHeroBannerIndex] = React.useState(0);
 
+  // Filter Bottom Sheet State
+  const [isFilterVisible, setIsFilterVisible] = React.useState(false);
+  const [selectedCategory, setSelectedCategory] = React.useState('All');
+  const [selectedPrice, setSelectedPrice] = React.useState('Any');
+  const [selectedRating, setSelectedRating] = React.useState('Any');
+  const [selectedAvailability, setSelectedAvailability] = React.useState('Any');
+
   // Auto slide tutors every 3.5 seconds
   React.useEffect(() => {
     const timer = setInterval(() => {
@@ -212,7 +221,10 @@ export default function HomeScreen() {
               <Ionicons name="chevron-down" size={14} color="#64748B" />
             </TouchableOpacity>
             
-            <TouchableOpacity className="relative p-2 bg-white rounded-full border border-slate-100 shadow-sm active:opacity-70">
+            <TouchableOpacity 
+              onPress={() => router.push('/notifications')}
+              className="relative p-2 bg-white rounded-full border border-slate-100 shadow-sm active:opacity-70"
+            >
               <Ionicons name="notifications-outline" size={22} color="#1E293B" />
               <View className="absolute top-1 right-1 bg-[#10B981] w-[18px] h-[18px] rounded-full items-center justify-center border-2 border-white">
                 <Text className="text-white text-[9px] font-bold">2</Text>
@@ -228,7 +240,10 @@ export default function HomeScreen() {
               placeholderTextColor="#94A3B8"
               className="flex-1 text-[#1E293B] text-[15px] p-0 px-3"
             />
-            <TouchableOpacity className="pl-3 border-l border-slate-100 active:opacity-70">
+            <TouchableOpacity 
+              onPress={() => setIsFilterVisible(true)}
+              className="pl-3 border-l border-slate-100 active:opacity-70"
+            >
               <Ionicons name="options-outline" size={20} color="#64748B" />
             </TouchableOpacity>
           </View>
@@ -641,6 +656,172 @@ export default function HomeScreen() {
           </View>
         </View>
       </ScrollView>
+
+      {/* Filter Bottom Sheet Modal */}
+      <Modal
+        visible={isFilterVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setIsFilterVisible(false)}
+      >
+        <View className="flex-1 justify-end bg-black/50">
+          {/* Backdrop Touch area to dismiss */}
+          <TouchableOpacity 
+            activeOpacity={1} 
+            onPress={() => setIsFilterVisible(false)} 
+            className="absolute inset-0"
+          />
+
+          {/* Modal Card container */}
+          <View className="bg-white rounded-t-[32px] px-6 pt-5 pb-8 shadow-2xl">
+            {/* Notch Drag Bar */}
+            <View className="w-12 h-1.5 bg-slate-200 rounded-full self-center mb-6" />
+
+            {/* Header Title */}
+            <View className="flex-row justify-between items-center mb-6">
+              <Text className="text-[#1B3B22] text-xl font-black">Filter Tutors</Text>
+              <TouchableOpacity 
+                onPress={() => setIsFilterVisible(false)}
+                activeOpacity={0.8}
+                className="rounded-full shadow-md shadow-[#10B981]/40"
+              >
+                <LinearGradient
+                  colors={['#10B981', '#059669']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  className="p-2 rounded-full"
+                >
+                  <Ionicons name="close" size={16} color="white" />
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
+
+            {/* Scrollable filters inside */}
+            <ScrollView showsVerticalScrollIndicator={false} className="max-h-[380px] mb-4">
+              
+              {/* Category Filter */}
+              <View className="mb-5">
+                <Text className="text-[#1E293B] text-[14px] font-extrabold mb-3">Category</Text>
+                <View className="flex-row flex-wrap gap-2.5">
+                  {['All', 'Mathematics', 'Science', 'Languages', 'Programming'].map((cat) => (
+                    <TouchableOpacity
+                      key={cat}
+                      onPress={() => setSelectedCategory(cat)}
+                      className={`px-4 py-2 rounded-full border ${
+                        selectedCategory === cat
+                          ? 'bg-[#E2F5EA] border-[#10B981]'
+                          : 'bg-white border-slate-100'
+                      }`}
+                    >
+                      <Text className={`text-xs font-black ${
+                        selectedCategory === cat ? 'text-[#10B981]' : 'text-[#64748B]'
+                      }`}>
+                        {cat}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+
+              {/* Price Filter */}
+              <View className="mb-5">
+                <Text className="text-[#1E293B] text-[14px] font-extrabold mb-3">Hourly Rate</Text>
+                <View className="flex-row flex-wrap gap-2.5">
+                  {['Any', '$10 - $20', '$20 - $35', '$35 - $50', '$50+'].map((price) => (
+                    <TouchableOpacity
+                      key={price}
+                      onPress={() => setSelectedPrice(price)}
+                      className={`px-4 py-2 rounded-full border ${
+                        selectedPrice === price
+                          ? 'bg-[#E2F5EA] border-[#10B981]'
+                          : 'bg-white border-slate-100'
+                      }`}
+                    >
+                      <Text className={`text-xs font-black ${
+                        selectedPrice === price ? 'text-[#10B981]' : 'text-[#64748B]'
+                      }`}>
+                        {price}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+
+              {/* Rating Filter */}
+              <View className="mb-5">
+                <Text className="text-[#1E293B] text-[14px] font-extrabold mb-3">Rating</Text>
+                <View className="flex-row flex-wrap gap-2.5">
+                  {['Any', '4.5 ★ & above', '4.0 ★ & above', '3.5 ★ & above'].map((rating) => (
+                    <TouchableOpacity
+                      key={rating}
+                      onPress={() => setSelectedRating(rating)}
+                      className={`px-4 py-2 rounded-full border ${
+                        selectedRating === rating
+                          ? 'bg-[#E2F5EA] border-[#10B981]'
+                          : 'bg-white border-slate-100'
+                      }`}
+                    >
+                      <Text className={`text-xs font-black ${
+                        selectedRating === rating ? 'text-[#10B981]' : 'text-[#64748B]'
+                      }`}>
+                        {rating}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+
+              {/* Availability Filter */}
+              <View className="mb-6">
+                <Text className="text-[#1E293B] text-[14px] font-extrabold mb-3">Availability</Text>
+                <View className="flex-row flex-wrap gap-2.5">
+                  {['Any', 'Morning', 'Afternoon', 'Evening', 'Weekends'].map((time) => (
+                    <TouchableOpacity
+                      key={time}
+                      onPress={() => setSelectedAvailability(time)}
+                      className={`px-4 py-2 rounded-full border ${
+                        selectedAvailability === time
+                          ? 'bg-[#E2F5EA] border-[#10B981]'
+                          : 'bg-white border-slate-100'
+                      }`}
+                    >
+                      <Text className={`text-xs font-black ${
+                        selectedAvailability === time ? 'text-[#10B981]' : 'text-[#64748B]'
+                      }`}>
+                        {time}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+
+            </ScrollView>
+
+            {/* Bottom Reset & Apply buttons */}
+            <View className="flex-row gap-4 mt-2">
+              <TouchableOpacity
+                onPress={() => {
+                  setSelectedCategory('All');
+                  setSelectedPrice('Any');
+                  setSelectedRating('Any');
+                  setSelectedAvailability('Any');
+                }}
+                className="flex-1 py-3.5 border border-slate-200 rounded-2xl active:opacity-75 items-center justify-center bg-white"
+              >
+                <Text className="text-[#64748B] text-sm font-black">Reset All</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => setIsFilterVisible(false)}
+                className="flex-1 py-3.5 bg-[#1B3B22] rounded-2xl active:opacity-85 items-center justify-center"
+              >
+                <Text className="text-white text-sm font-black">Apply Filters</Text>
+              </TouchableOpacity>
+            </View>
+
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }

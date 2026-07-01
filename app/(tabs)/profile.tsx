@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, Dimensions } from 'react-nati
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -26,7 +27,10 @@ export default function ProfileScreen() {
 
         {/* Bell and Settings Icons */}
         <View className="flex-row items-center gap-3">
-          <TouchableOpacity className="relative p-2 bg-white rounded-full border border-slate-100 shadow-sm active:opacity-70">
+          <TouchableOpacity 
+            onPress={() => router.push('/notifications')}
+            className="relative p-2 bg-white rounded-full border border-slate-100 shadow-sm active:opacity-70"
+          >
             <Ionicons name="notifications-outline" size={22} color="#1E293B" />
             <View className="absolute top-1 right-1 bg-[#EF4444] w-[18px] h-[18px] rounded-full items-center justify-center border-2 border-white">
               <Text className="text-white text-[9px] font-extrabold">3</Text>
