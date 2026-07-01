@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 
@@ -26,10 +25,13 @@ export default function SuccessScreen() {
 
       {/* Main Success Card Center Area */}
       <View className="items-center justify-center flex-1 px-4">
-        {/* Animated Checkmark Circle */}
-        <View className="w-[120px] h-[120px] bg-[#EBFDF5] border-4 border-[#10B981] rounded-full items-center justify-center mb-8 shadow-sm shadow-[#10B981]/20">
-          <Ionicons name="checkmark" size={64} color="#1B3B22" />
-        </View>
+        {/* Modern Success Illustration */}
+        <Image 
+          source={require('@/assets/images/success_illustration.png')} 
+          style={{ width: 240, height: 240 }}
+          resizeMode="contain"
+          className="mb-8"
+        />
 
         {/* Success Title */}
         <Text className="text-[#1B3B22] text-[28px] font-black text-center tracking-tight mb-4">
